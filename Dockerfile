@@ -30,4 +30,4 @@ RUN apk add --update musl-dev
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-CMD [ "gunicorn", "--chdir", "./server", "--worker-class", "eventlet", "-w", "1", "server:app"]
+CMD [ "gunicorn","-b","0.0.0.0", "--chdir", "./server", "--worker-class", "eventlet", "-w", "1", "server:app"]

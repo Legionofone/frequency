@@ -8,6 +8,7 @@ import Clue from "../components/Clue";
 import Target from "../components/Target";
 import ScoreIndicator from "../components/ScoreIndicator";
 import { Team, Direction } from "../enums";
+const QRCode = require('qrcode');
 
 export default function Game() {
   let { lobbyId } = useParams();
@@ -27,6 +28,7 @@ class Device extends Component {
       roundNum: 0,
       gameId: 0,
       loading: true,
+      ThisQRCode: ''
     };
   }
 
@@ -45,6 +47,20 @@ class Device extends Component {
     const serverUrl = process.env.NODE_ENV === "production" ? "/" : ":8080/";
     const client = socketIOClient(serverUrl);
     const { lobbyId } = this.props;
+    
+    QRCode.toDataURL(window.location.href, {
+      width: 250,
+      height: 250,
+      color: { dark: "#000000", light: "#535353" }
+      } , (err, data) => {
+      if (err) throw err;
+
+      console.log(data);
+      this.setState({
+          ThisQRCode: data
+      });
+  }
+)
 
     client.on("connect", () => {
       client.emit("requestGameState", lobbyId);
@@ -203,6 +219,16 @@ class Device extends Component {
     );
   };
 
+  skipClueClicked = (event) => {
+    let { client, gameState, controlsDisabled } = this.state;
+    let { screenClosed, targetPosition } = gameState;
+    const { lobbyId } = this.props;
+    client.emit("nextRound", lobbyId);
+    client.emit("nextRound", lobbyId);
+  }
+
+  
+
   render() {
     const { psychic, gameState, loading } = this.state;
 
@@ -239,6 +265,7 @@ class Device extends Component {
         : Team.LEFT_BRAIN;
 
     return (
+      
       <div className="device_parent">
         <div className="device_outer">
           <div className="device">
@@ -288,7 +315,8 @@ class Device extends Component {
             onMouseDown={this.directionToggleClicked}
             psychic={psychic}
           />
-          <Clue clues={clues} color={clueColor} />
+          <Clue clues={clues} color={clueColor}/>
+          <button className="skip" type="button" onMouseDown={this.skipClueClicked}>Skip</button>
           <ScoreIndicator
             isTurn={turn === Team.LEFT_BRAIN}
             team={Team.LEFT_BRAIN}
@@ -311,6 +339,7 @@ class Device extends Component {
             ""
           )}
         </div>
+        <div className="QRCode"><div className='gameCode'>{window.location.pathname.toString().replace('/','').replace('/','')}</div><div><img src={this.state.ThisQRCode} key={this.state.ThisQRCode} /></div></div>
       </div>
     );
   }

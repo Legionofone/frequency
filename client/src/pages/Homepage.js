@@ -1,12 +1,15 @@
 import React, { Component } from "react";
+import makeid from "../components/makeid";
+
 
 export default class Homepage extends Component {
-  constructor(props) {
+   constructor(props) {
     super(props);
     this.state = {
-      formText: "",
+      formText: makeid(4),
     };
   }
+
 
   handleSubmit = (event) => {
     event.preventDefault();

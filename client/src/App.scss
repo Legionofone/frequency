@@ -16,7 +16,7 @@ $outerDeviceBorder: 10px;
 }
 
 .device_outer {
-  background-color: #f4ede1;
+  background-color: #e1eef4;
 
   width: $outerDeviceDiameter;
   height: $outerDeviceDiameter;
@@ -608,4 +608,47 @@ $arrowWidth: 80px;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
   border: 1px solid #888888;
   border-radius: 2px;
+}
+
+.QRCode {
+  position: absolute;
+  left: 0;
+  right: calc(#{$outerDeviceDiameter} / 2 - 250 / 2);
+  width:250px;
+  height: 250px;
+}
+
+$buttonwidth: 75px; 
+.skip {
+  position: absolute;
+  left: calc(#{$outerDeviceDiameter} / 2 - #{$buttonwidth} / 2);
+  width: #{$buttonwidth};
+  height: 30px;
+
+  bottom: 50px;
+  text-align: center;
+  outline: #000;
+  outline-width: 2px ;
+  text-decoration: none;
+  color: #fff;
+  border: none;
+  background-color: #04AA6D;
+  font-size: 24px;
+  padding: 0px;
+}
+.gameCode {
+  text-align: center;
+  font-size: 45px;
+  height: 50px;
+  font-weight: bold;
+  color: #000000;
+
+  }
+
+$backgroundcolor: #535353;
+html {
+  background-color: #{$backgroundcolor};
+}
+body {
+  background-color: #{$backgroundcolor};
 }

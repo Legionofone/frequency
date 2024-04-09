@@ -58,7 +58,7 @@ export default class Clue extends Component {
     const { hide, oldClues, oldColor } = this.state;
     return (
       <>
-        <div className={(hide ? "hide" : "") + " clue"}>
+        <div className={(hide ? "hide" : "") + " clue"} >
           <div
             className="clueLeft"
             style={{
