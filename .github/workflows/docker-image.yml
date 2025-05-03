@@ -3,11 +3,7 @@ name: Create and publish a Docker image
 on:
   push:
     branches: 
-      - main
-    paths-ignore:
-      - '**/README.md'
-      - '**/.github/**'
-      - '**/markdown/**'
+      - master
 
 env:
   REGISTRY: ghcr.io
